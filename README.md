@@ -10,7 +10,7 @@ This project needs two entities primarily.
 | Entity | Fields |
 |--|--|
 | User | id, username, password, roles |
-| Rol | id, name, description
+| Role | id, name, description
 
 # HTTP Request
 

@@ -19,12 +19,12 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(value = "com.roman.jwtskeleton.model.repository")
-public class PersistenceJPAConfig {
+public class PersistenceJPAConfiguration {
 
     private final Environment env;
 
     @Autowired
-    public PersistenceJPAConfig(Environment env) {
+    public PersistenceJPAConfiguration(Environment env) {
         this.env = env;
     }
 

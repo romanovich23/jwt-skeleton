@@ -1,7 +1,8 @@
-package com.roman.jwtskeleton.model.repository;
+package com.roman.jwtskeleton.service;
 
 import com.roman.jwtskeleton.model.entity.User;
 import com.roman.jwtskeleton.model.mapper.UserDetailsMapper;
+import com.roman.jwtskeleton.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;

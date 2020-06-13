@@ -3,7 +3,7 @@ package com.roman.jwtskeleton.controller;
 import com.roman.jwtskeleton.dto.UserDTO;
 import com.roman.jwtskeleton.error.NullParametersException;
 import com.roman.jwtskeleton.error.UserAlreadyExistsException;
-import com.roman.jwtskeleton.model.entity.User;
+import com.roman.jwtskeleton.error.UserNotFoundException;
 import com.roman.jwtskeleton.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +20,10 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final ModelMapper modelMapper;
 
     @Autowired
     public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
-        this.modelMapper = modelMapper;
     }
 
     @Secured("ROLE_ADMIN")
@@ -42,9 +40,31 @@ public class UserController {
         String message = "Saved user";
 
         try {
-            User user = this.modelMapper.map(userDTO, User.class);
-            this.userService.saveUser(user);
+            this.userService.saveUser(userDTO);
         } catch (UserAlreadyExistsException | NullParametersException e) {
+            status = HttpStatus.BAD_REQUEST;
+            message = e.getMessage();
+        } catch (Exception e) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            message = e.getMessage();
+        }
+
+        response.put("status", status.value());
+        response.put("message", status.getReasonPhrase() + " - " + message);
+
+        return ResponseEntity.status(status).body(response);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping(produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Map<String, Object>> delete(@RequestBody UserDTO userDTO) {
+        Map<String, Object> response = new HashMap<>();
+        HttpStatus status = HttpStatus.OK;
+        String message = "Deleted user";
+
+        try {
+            this.userService.deleteUser(userDTO.getUsername());
+        } catch (UserNotFoundException | NullParametersException e) {
             status = HttpStatus.BAD_REQUEST;
             message = e.getMessage();
         } catch (Exception e) {

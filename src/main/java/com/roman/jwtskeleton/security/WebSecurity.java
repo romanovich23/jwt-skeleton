@@ -48,7 +48,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
                 .anyRequest().authenticated().and()
                 .addFilterBefore(new JWTAuthenticationFilter(this.authenticationManagerBean()), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(JWTAuthorizationFilterBean(),UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(JWTAuthorizationFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

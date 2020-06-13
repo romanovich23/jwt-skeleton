@@ -3,6 +3,7 @@ package com.roman.jwtskeleton.service;
 import com.roman.jwtskeleton.dto.UserDTO;
 import com.roman.jwtskeleton.error.NullParametersException;
 import com.roman.jwtskeleton.error.UserAlreadyExistsException;
+import com.roman.jwtskeleton.error.UserNotFoundException;
 import com.roman.jwtskeleton.model.entity.User;
 import com.roman.jwtskeleton.model.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -57,7 +58,7 @@ public class UserService {
         try {
             if (null == username) throw new NullParametersException("Username is null");
             User user = this.userRepository.findByUsername(username);
-            if (null == user) throw new UserAlreadyExistsException(username);
+            if (null == user) throw new UserNotFoundException(username);
             this.userRepository.delete(user);
         } catch (JpaSystemException e) {
             this.logger.error(e.getMessage());

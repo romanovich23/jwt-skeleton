@@ -1,7 +1,6 @@
 package com.roman.jwtskeleton.security;
 
 import com.roman.jwtskeleton.model.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -25,7 +24,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private final UserRepository userRepository;
     private final UserDetailsService userDetailsService;
 
-    @Autowired
     public WebSecurity(UserRepository userRepository, UserDetailsService userDetailsService) {
         this.userRepository = userRepository;
         this.userDetailsService = userDetailsService;

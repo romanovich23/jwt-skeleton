@@ -5,8 +5,6 @@ import com.roman.jwtskeleton.error.NullParametersException;
 import com.roman.jwtskeleton.error.UserAlreadyExistsException;
 import com.roman.jwtskeleton.error.UserNotFoundException;
 import com.roman.jwtskeleton.service.UserService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -21,8 +19,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

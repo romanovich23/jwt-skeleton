@@ -27,7 +27,7 @@ The token is obtaining by logging in through the authorization header.
  - Login
  - Test
  
- # Script SQL
+# Script SQL
 
 Script necessary for the relational model.
  
@@ -71,7 +71,7 @@ Script necessary for the relational model.
      create index users_roles_user_index on users_roles (user);
      create index users_roles_role_index on users_roles (role);
      
-#Testing script SQL
+# Testing script SQL
 
     insert into roles(name) value ('ADMIN');
     insert into roles(name) value ('USER');

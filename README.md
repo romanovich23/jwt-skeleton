@@ -44,7 +44,7 @@ Script necessary for the relational model.
      create table users
      (
          id       int auto_increment,
-         username VARCHAR(255) not null,
+         username varchar(255) not null,
          password varchar(255) not null,
          constraint users_pk
              primary key (id)

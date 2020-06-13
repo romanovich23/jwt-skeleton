@@ -17,8 +17,8 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories
 @EnableTransactionManagement
+@EnableJpaRepositories(value = "com.roman.jwtskeleton.model.repository")
 public class PersistenceJPAConfig {
 
     private final Environment env;
@@ -29,7 +29,7 @@ public class PersistenceJPAConfig {
     }
 
     @Bean
-    public DataSource dataSourceBean() {
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getRequiredProperty("spring.datasource.driver-class-name"));
         dataSource.setUsername(env.getRequiredProperty("spring.datasource.username"));
@@ -39,23 +39,23 @@ public class PersistenceJPAConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         Properties properties = new Properties();
-        em.setPackagesToScan(env.getRequiredProperty("spring.jpa.properties.package.entities"), env.getRequiredProperty("spring.jpa.properties.package.repositories"));
+        em.setPackagesToScan("com.roman.jwtskeleton.model.entity");
         properties.setProperty("spring.jpa.properties.hibernate.dialect", env.getRequiredProperty("spring.jpa.properties.hibernate.dialect"));
         properties.setProperty("spring.jpa.hibernate.ddl-auto", env.getRequiredProperty("spring.jpa.hibernate.ddl-auto"));
         em.setJpaVendorAdapter(vendorAdapter);
-        em.setDataSource(dataSourceBean());
+        em.setDataSource(dataSource());
         em.setJpaProperties(properties);
         return em;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManagerBean() {
+    public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
 
